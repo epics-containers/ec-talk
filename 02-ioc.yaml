@@ -1,0 +1,35 @@
+modules:
+  autosave:
+    macro: AUTOSAVE
+    tag: R5-10-2
+    git: github.com/epics-modules/autosave.git
+  asyn:
+    macro: ASYN
+    tag: R4-42
+    git: github.com/epics-modules/asyn.git
+    patch: patch/asyn
+  busy:
+    macro: BUSY
+    tag: R1-7-3
+    git: github.com/epics-modules/busy.git
+  sscan:
+    macro: SSCAN
+    tag: R2-11-5 
+    git: github.com/epics-modules/sscan.git
+  calc:
+    macro: CALC
+    tag: R3-7-4
+    git: github.com/epics-modules/calc.git
+  ipac:
+    macro: IPAC
+    tag: 2.16
+    git: github.com/epics-modules/ipac.git
+  motor:
+    macro: MOTOR
+    tag: R7-2-3b1
+    git: github.com/dls-controls/motor.git
+  pmac:
+    macro: PMAC
+    tag: 2-6-0b2
+    git: github.com/dls-controls/pmac.git
+    patch: patch/pmac

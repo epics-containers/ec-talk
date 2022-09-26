@@ -1,0 +1,38 @@
+# Generic IOC for delta tau turbo pmac 2 and power pmac
+
+##### build stage ##############################################################
+
+FROM ghcr.io/epics-containers/epics-base-linux-developer:work AS developer
+
+# install additional build time dependencies
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+    libssh2-1-dev \
+    libboost-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# get and build the required support modules
+WORKDIR ${SUPPORT}
+COPY modules .
+RUN ibek install modules/modules.yaml
+
+# build the generic IOC
+COPY ioc ${IOC}
+RUN make -C ${IOC} && make -C ${IOC} clean
+
+##### runtime preparation stage ################################################
+
+FROM developer AS runtime_prep
+
+# get the products from the build stage and reduce to runtime assets only 
+WORKDIR /min_files
+RUN bash ${SUPPORT}/minimize.sh ${IOC} $(ls -d ${SUPPORT}/*/) 
+
+##### runtime stage #############################################################
+
+FROM ghcr.io/epics-containers/epics-base-linux-runtime:work AS runtime
+
+# install additional runtime dependencies here if needed
+
+# get the products from the build stage
+COPY --from=runtime_prep /min_files /
