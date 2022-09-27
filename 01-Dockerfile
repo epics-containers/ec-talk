@@ -14,7 +14,7 @@ RUN apt-get update && apt-get upgrade -y && \
 # get and build the required support modules
 WORKDIR ${SUPPORT}
 COPY modules .
-RUN ibek install modules/modules.yaml
+RUN ibek install modules/pmac.ibek.modules.yaml
 
 # build the generic IOC
 COPY ioc ${IOC}
