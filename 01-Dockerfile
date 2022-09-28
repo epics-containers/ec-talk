@@ -32,7 +32,11 @@ RUN bash ${SUPPORT}/minimize.sh ${IOC} $(ls -d ${SUPPORT}/*/)
 
 FROM ghcr.io/epics-containers/epics-base-linux-runtime:work AS runtime
 
-# install additional runtime dependencies here if needed
+# install runtime dependencies
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+    libssh2-1-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # get the products from the build stage
 COPY --from=runtime_prep /min_files /
